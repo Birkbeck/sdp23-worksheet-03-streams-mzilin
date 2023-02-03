@@ -1,5 +1,7 @@
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 public class Outline {
@@ -166,9 +168,9 @@ public class Outline {
     List<String> words = getList();
     System.out.println("9:");
     // YOUR CODE
-//    String concat = words.stream()
-//            .collect(Collectors.joining(","));
-    String concat = String.join(",", words);
+    String concat = words.stream()
+            .collect(Collectors.joining(","));
+//    String concat = String.join(",", words);
     System.out.println(concat);
   }
 
@@ -177,22 +179,28 @@ public class Outline {
   // Use streams to filter the first two meat dishes.
 
   public static void question10() {
-
+    System.out.println("10:");
+    List<Dish> menu = Dish.getMenu().stream()
+            .filter(d -> d.type() == Dish.Type.MEAT)
+            .limit(2)
+            .toList();
+    System.out.println(menu);
   }
 
 
   // Count the number of dishes in a stream using the map and reduce methods.
-  //  For the remaining questions, it can be useful to refer to a list of numbers provided,
-  //  for example, by
-  //
-  //```.java
-  //  public static Integer[] getIntegerArray() {
-  //    return new Integer[] { 1, 7, 3, 4, 8, 2 };
-  //  }
-  //```
 
   public static void question11() {
+    System.out.println("11:");
+    int numberOfDishes = Dish.getMenu().stream()
+            .map(d -> 1)
+            .reduce(0, Integer::sum);
+    System.out.println("numberOfDishes: " + numberOfDishes);
+  }
 
+
+  public static Integer[] getIntegerArray() {
+    return new Integer[] { 1, 7, 3, 4, 8, 2 };
   }
 
 
@@ -200,7 +208,11 @@ public class Outline {
   // For example, given `[1, 2, 3, 4, 5]` you should print `[1, 4, 9, 16, 25]`.
 
   public static void question12() {
-
+    System.out.println("12:");
+    List<Integer> squares = Stream.of(getIntegerArray())
+            .map(x -> x * x)
+            .toList();
+    System.out.println("squares: " + squares);
   }
 
 
@@ -210,7 +222,14 @@ public class Outline {
   //  For simplicity, you can represent each *pair* as a list with two elements.
 
   public static void question13() {
-
+    System.out.println("13:");
+    List<Integer> list1 = List.of(1, 2, 3);
+    List<Integer> list2 = List.of(3, 4);
+    List<List<Integer>> pairs = list1.stream()
+            .flatMap(x -> list2.stream()
+                    .map(y -> List.of(x, y)))
+            .toList();
+    System.out.println("pairs: " + pairs);
   }
 
 
@@ -218,7 +237,15 @@ public class Outline {
   // sum is divisible by `3`. For example, `[2, 4]` and `[3, 3]` are valid.
 
   public static void question14() {
-
+    System.out.println("14:");
+    List<Integer> list1 = List.of(1, 2, 3);
+    List<Integer> list2 = List.of(3, 4);
+    List<List<Integer>> pairs = list1.stream()
+            .flatMap(x -> list2.stream()
+                    .filter(y -> (x + y) % 3 == 0)
+                    .map(y -> List.of(x, y)))
+            .toList();
+    System.out.println("pairs: " + pairs);
   }
 
 
@@ -226,7 +253,7 @@ public class Outline {
   // numbers.
 
   public static void question15() {
-
+    System.out.println("15:");
   }
 
 
@@ -239,6 +266,7 @@ public class Outline {
   // Result is something like `[0.7096867136897776, 0.09894202723079482, ...]`
 
   public static void question16() {
+    System.out.println("16:");
 
   }
 
@@ -252,7 +280,7 @@ public class Outline {
   //  Result is `[50, 55, 60, ...]`.
 
   public static void question17() {
-
+    System.out.println("17:");
   }
 
 
@@ -260,7 +288,7 @@ public class Outline {
   // in parallel; verify that you get the same answer as for the sequential code.
 
   public static void question18() {
-
+    System.out.println("18:");
   }
 
 
@@ -274,7 +302,7 @@ public class Outline {
   //    Also, it will be impossible to have differing results if you have a single-core computer!
 
   public static void question19() {
-
+    System.out.println("19:");
   }
 
   // ------------------------
