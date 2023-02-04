@@ -1,6 +1,9 @@
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 
@@ -254,6 +257,20 @@ public class Outline {
 
   public static void question15() {
     System.out.println("15:");
+    List<Integer> list = List.of(getIntegerArray());
+
+    int sum = list.stream()
+            .reduce(0, Integer::sum);
+    System.out.println("a: sum = " + sum);
+
+    sum = list.stream()
+            .mapToInt(Integer::intValue)
+            .sum();
+    System.out.println("b: sum = " + sum);
+
+    final int[] sum2 = {0};
+    list.stream().forEach(i -> sum2[0] += i);
+    System.out.println("c: sum = " + sum2[0]);
   }
 
 
@@ -267,9 +284,22 @@ public class Outline {
 
   public static void question16() {
     System.out.println("16:");
-
+    System.out.println(randomNumberList(5));
   }
 
+  public static List<Double> randomNumberList(int n) {
+    Random rd = new Random();
+    return Stream.iterate(1, e -> e + 1)
+            .mapToDouble(i -> rd.nextDouble())
+            .limit(n)
+            .boxed()
+            .collect(Collectors.toList());
+//
+//    return IntStream.range(0, n)
+//            .mapToDouble(i -> rd.nextDouble())
+//            .boxed()
+//            .collect(Collectors.toList());
+  }
 
   // (*) Write a static method that produces a `List` of numbers that go in order
   //    by a step size. For example,
@@ -281,6 +311,13 @@ public class Outline {
 
   public static void question17() {
     System.out.println("17:");
+    System.out.println(orderedNumberList(20, 3, 4));
+  }
+
+  public static List<Integer> orderedNumberList(int startValue, int step, int n) {
+    return Stream.iterate(startValue, e -> e + step)
+            .limit(n)
+            .collect(Collectors.toList());
   }
 
 
@@ -289,6 +326,14 @@ public class Outline {
 
   public static void question18() {
     System.out.println("18:");
+    List<Integer> list = List.of(getIntegerArray());
+    int sum = list.stream()
+            .reduce(0, Integer::sum);
+    System.out.println("sequential: sum = " + sum);
+
+    sum = list.parallelStream()
+            .reduce(0, Integer::sum);
+    System.out.println("parallel: sum = " + sum);
   }
 
 
@@ -303,6 +348,15 @@ public class Outline {
 
   public static void question19() {
     System.out.println("19:");
+
+    List<Double> list = List.of(5.7, 6.32, 6.66, 9.222, 0.344, 5.2);
+    double prod = list.stream()
+            .reduce(1.0, (a, b) -> a * b);
+    System.out.println("sequential: sym = " + prod);
+
+    prod = list.parallelStream()
+            .reduce(1.0, (a, b) -> a * b);
+    System.out.println("parallel: sym = " + prod);
   }
 
   // ------------------------
